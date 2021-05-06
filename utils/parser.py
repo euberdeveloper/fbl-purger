@@ -42,7 +42,7 @@ def parse_line(line: str) -> dict[str, str]:
     ] = parts
 
     return dict(
-        telephone=[telephone],
+        telephone=telephone,
         facebookId=facebookId,
         name=name,
         surname=surname,
