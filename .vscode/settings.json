@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.pythonPath": "/home/euber/.local/share/virtualenvs/facebookleaks-to-mongo-h853tljy/bin/python"
+}

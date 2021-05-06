@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pymongo = "*"
+joblib = "*"
+
+[dev-packages]
+flake8 = "*"
+
+[scripts]
+all = "python main.py"
+
+[requires]
+python_version = "3.9"
