@@ -23,5 +23,5 @@ class Uploader:
             self.upload()
 
     def destroy(self) -> None:
-        self.buffer = {}
+        self.buffer = []
         self.client.close()
