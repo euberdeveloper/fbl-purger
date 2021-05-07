@@ -1,5 +1,5 @@
-from pymongo import MongoClient, ASCENDING, UpdateOne
-from pymongo.errors import BulkWriteError
+from pymongo import MongoClient
+from ...utils.logger import log
 
 class Uploader:
     def __init__(self, language: str, threshold: int, dbname: str):
@@ -13,6 +13,7 @@ class Uploader:
 
     def upload(self) -> None:
         if self.buffer:
+            log(f'Uploading to {self.language} {len(self.buffer)} elements')
             self.collection.insert_many(self.buffer)
             self.buffer = []
         

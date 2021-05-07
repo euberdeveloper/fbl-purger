@@ -5,7 +5,7 @@ class FileDir:
     def __get_lang_from_dirname(self, dirname: str) -> str:
         try:
             return dirname.split('_')[0]
-        except err:
+        except Exception as err:
             raise Exception(f'Dirname {dirname} is not properly formatted (es. ITA_Italia)') from err
 
     def __retrieve_langs_paths(self) -> list[dict]:
@@ -18,7 +18,7 @@ class FileDir:
     def __get_lang_obj_from_lang(self, lang: str) -> dict:
         try:
             return next(filter(lambda el: el['lang'].lower() == lang.lower(), self.langs_paths))
-        except err:
+        except Exception as err:
              raise Exception(f'Language {lang} not found') from err
 
     def __init__(self, datasets_path: Path):

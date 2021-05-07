@@ -3,6 +3,7 @@ from pathlib import Path
 from joblib import Parallel, delayed
 from typing import Optional
 
+from ..utils.logger import log
 from .utils.defaults import DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_PARALLEL, DEFAULT_THREADS
 from .utils.filedir import FileDir
 from .utils.uploader import Uploader
@@ -27,14 +28,18 @@ def _purge_asset(path: Path, uploader: Uploader) -> None:
         uploader.upload()
 
 def _purge_lang(lang: str, threshold: int, dbname: str, filedir: FileDir) -> None:
+    log(f'Start purge lang {lang}')
     assets = filedir.retrieve_lang_assets(lang)
     lang_full_name = filedir.retrieve_lang_fullname(lang)
     uploader = Uploader(lang_full_name, threshold, dbname)
 
     for asset in assets:
+        log(f'Start purge lang {lang} asset {asset.name}')
         _purge_asset(asset, uploader)
+        log(f'Finish purge lang {lang} asset {asset.name}')
 
     uploader.destroy()
+    log(f'Finish purge lang {lang}')
 
 
 def purge(src = DEFAULT_SRC, langs: list[str] = DEFAULT_LANGS, dbname = DEFAULT_DBNAME, threshold = DEFAULT_THRESHOLD, parallel = DEFAULT_PARALLEL, threads = DEFAULT_THREADS) -> None:
@@ -51,9 +56,8 @@ def purge(src = DEFAULT_SRC, langs: list[str] = DEFAULT_LANGS, dbname = DEFAULT_
             _purge_lang(lang, threshold, dbname, filedir)
 
 
-def langs(src = DEFAULT_SRC) -> None:
+def langs(src = DEFAULT_SRC) -> list[str]:
     src_path = Path(src)
     filedir = FileDir(src_path)
-    langs = filedir.retrieve_langs()
-    langs_list = "\n".join(langs)
-    print(f'Available langs are: \n{langs_list}')
+    return filedir.retrieve_langs()
+    
