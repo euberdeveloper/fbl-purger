@@ -7,7 +7,6 @@ from whaaaaat import prompt
 def select_languages(src: str, current_langs: list[str]) -> list[str]:
     current_langs = [l.upper() for l in current_langs]
     raw_options = purger.langs(src)
-    include_all = 'all' in current_langs
     options = [
         { 'name': option, 'value': option, 'checked': include_all or option in current_langs }
         for option in raw_options
@@ -42,7 +41,8 @@ def purge(*, src: str, langs: list[str], dbname: str, threshold: int, parallel: 
 def langs(*, src: str):
     langs = purger.langs(src)
     langs_list = "\n".join(langs)
-    print(f'Available langs are: \n{langs_list}')
+    click.echo(click.style('Available langs are:', fg='yellow', bold=True))
+    click.echo(click.style(f'{langs_list}', fg='blue', bold=True))
 
 if __name__ == '__main__':
     cli()
