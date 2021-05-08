@@ -14,10 +14,7 @@ class Uploader:
         if self.collection.count != 0:
             if force:
                 log(f'{self.language} already exists: dropping')
-                self.collection.drop()
-                self.client.close()
-            else:
-                raise Exception(f'Collection {self.language} already exists')            
+                self.collection.drop()          
 
     def upload(self) -> None:
         if self.buffer:

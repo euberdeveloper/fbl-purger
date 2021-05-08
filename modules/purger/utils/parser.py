@@ -73,8 +73,9 @@ class Parser:
         matched = re.match(self.regex, line)
         return None if matched is None else matched.groupdict()
 
-    def __init__(self,  lang: str):
+    def __init__(self,  lang: str, nazi: bool):
         self.lang = lang
+        self.nazi = nazi
         self.schema = self.__fetch_schemas(lang)
         self.regex = self.__compute_regex(self.schema)
         self.failed_line = None
@@ -84,8 +85,6 @@ class Parser:
         extracted = self.__parse_line(line)
 
         if extracted is None:
-            if self.subseq_failures > MAX_FAILURES:
-                raise Exception(f'{self.lang}, too many failures ({self.subseqfailures})')
             if self.failed_line:
                 whole_line = self.failed_line + line
                 extracted = self.__parse_line(whole_line)
@@ -93,8 +92,20 @@ class Parser:
                 self.subseq_failures = self.subseq_failures + 1 if extracted is None else 0
             else:
                 self.failed_line = line
+                self.subseq_failures += 1
+            if self.subseq_failures > MAX_FAILURES:
+                if self.nazi:
+                    log(f'{self.lang}, too many failures ({self.subseq_failures})')
+                    raise Exception(f'{self.lang}, too many failures ({self.subseq_failures})')
+                else:
+                    log(f'WARNING {self.lang}, {self.subseq_failures} subsequent failures, file is probably nonsense')
+                    self.failed_line = None
         elif self.failed_line:
-            log(f'Failed parsing {self.lang} line at index {index}')
+            if self.nazi:
+                log(f'Failed parsing {self.lang} line at index {index}')
+                raise Exception(f'Failed parsing {self.lang} line at index {index}')
+            else:
+                log(f'Failed parsing {self.lang} line at index {index}')
             self.failed_line = None
 
         return None if extracted is None else self.__parse_matched(extracted, index)

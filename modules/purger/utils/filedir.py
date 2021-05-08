@@ -34,7 +34,7 @@ class FileDir:
     def retrieve_lang_assets(self, lang: str) -> list[Path]:
         lang_obj = self.__get_lang_obj_from_lang(lang)
         lang_path = lang_obj['path']
-        return sorted([file for file in lang_path.iterdir() if file.is_file() and file.suffix == '.bz2'])
+        return sorted([file for file in lang_path.iterdir() if file.is_file() and file.suffix == '.bz2'], key=lambda f: f.name)
     
     def retrieve_lang_fullname(self, lang: str) -> list[Path]:
         lang_obj = self.__get_lang_obj_from_lang(lang)

@@ -30,16 +30,18 @@ def cli():
 @click.option('-l', '--langs', type=click.STRING, multiple=True, default=[], show_default=True, help='Languages to purge. If "all" is passed, all the languages are selected.')
 @click.option('-d', '--dbname', type=click.STRING, default='fbl', show_default=True, help='Database name')
 @click.option('-t', '--threshold', type=click.INT, default=int(1e6), show_default=True, help='Threshold of profiles that can be parsed without being uploaded to the db')
-@click.option('-p', '--parallel/--no-parallel', is_flag=True, show_default=True, help='If uploading more than a language, parallelize the uploadings')
+@click.option('-p', '--parallel/--no-parallel', is_flag=True, show_default=True, help='If uploading more than a language, purge these languages in parallel')
 @click.option('--threads', type=click.INT, default=multiprocessing.cpu_count(), show_default=True, help='If parallel is active, specify the number of parallel processes. Default is the number of cores of the CPU.')
 @click.option('-c', '--choose-langs/--no-choose-langs', is_flag=True, show_default=True, help='If the user will be asked to select the languages')
 @click.option('-f', '--force/--no-force', is_flag=True, show_default=True, help='If already populated collections will be overriden. Overrides skip behaviour.')
-@click.option('--skip/--no-skip', is_flag=True, show_default=True, help='If uploading more than a language, parallelize the uploadings')
-def purge(*, src: str, langs: list[str], dbname: str, threshold: int, parallel: bool, threads: int, choose_langs: bool, force: bool, skip: bool):
+@click.option('--skip/--no-skip', is_flag=True, show_default=True, help='If when encountering an already populate collection its purging will be skipped.')
+@click.option('-o', '--octopus/--no-octopus', is_flag=True, show_default=True, help='If parallel is set, purge even the assets of a same language in parallel')
+@click.option('-n', '--nazi/--no-nazi', is_flag=True, show_default=True, help='If fails as soon as an invalid line is encountered. Note that if')
+def purge(*, src: str, langs: list[str], dbname: str, threshold: int, parallel: bool, threads: int, choose_langs: bool, force: bool, skip: bool, octopus: bool, nazi: bool):
     if choose_langs:
         available_langs = purger.langs(src)
         langs = select_languages(available_langs, langs)
-    purger.purge(src, langs, dbname, threshold, parallel, threads, force, skip)
+    purger.purge(src, langs, dbname, threshold, parallel, threads, force, skip, octopus, nazi)
 
 
 @cli.group(help="Writes the available langs")
