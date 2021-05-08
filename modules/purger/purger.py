@@ -19,9 +19,6 @@ def _print_settings(src: Path, langs: list[str], dbname: str, threshold: int, pa
     print(f'If I parallelize, I will use {threads} processes')
     print('---------------')
 
-#508904
-#130.1MB
-
 def _purge_asset(path: Path, uploader: Uploader, parser: Parser) -> None:
     with bz2.open(path, 'rt') as input_file:
         for index, line in enumerate(input_file):
