@@ -14,6 +14,7 @@ REGEXPS = {
     'datetime': r'(?:\d{1,2}\/\d{1,2}\/\d{1,4} \d{1,2}:\d{1,2}:\d{1,2} (?:AM|PM))',
     'date': r'(?:(?:\d{1,2})(?:\/\d{1,2})?(?:\/\d{1,4})?)'
 }
+MAX_FAILURES = 10
 
 class Parser:
     def __fetch_schemas(self, lang: str) -> dict:
@@ -77,16 +78,19 @@ class Parser:
         self.schema = self.__fetch_schemas(lang)
         self.regex = self.__compute_regex(self.schema)
         self.failed_line = None
-        self.shit = 0
+        self.subseq_failures = 0
 
     def parse_line(self, index: int, line: str) -> Optional[dict]:
         extracted = self.__parse_line(line)
 
         if extracted is None:
+            if self.subseq_failures > MAX_FAILURES:
+                raise Exception(f'{self.lang}, too many failures ({self.subseqfailures})')
             if self.failed_line:
                 whole_line = self.failed_line + line
                 extracted = self.__parse_line(whole_line)
                 self.failed_line = whole_line if extracted is None else None
+                self.subseq_failures = self.subseq_failures + 1 if extracted is None else 0
             else:
                 self.failed_line = line
         elif self.failed_line:
