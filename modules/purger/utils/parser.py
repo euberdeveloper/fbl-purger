@@ -94,7 +94,7 @@ class Parser:
             else:
                 self.failed_line = line
         elif self.failed_line:
-            log(f'Failed parsing line at index {index}')
+            log(f'Failed parsing {self.lang} line at index {index}')
             self.failed_line = None
 
         return None if extracted is None else self.__parse_matched(extracted, index)

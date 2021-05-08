@@ -60,5 +60,67 @@
             "type": "date",
             "optional": true
         }
+    },
+    "AUS": {
+        "telephone": {
+            "regex": "numeric",
+            "type": "string",
+            "optional": false
+        },
+        "fid": {
+            "regex": "numeric",
+            "type": "number",
+            "optional": false
+        },
+        "name": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "surname": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "sex": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "birthPlace": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "residence": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "maritalStatus": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "profession": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "unusefulDate": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "email": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "birthDate": {
+            "regex": "date",
+            "type": "date",
+            "optional": true
+        }
     }
 }
