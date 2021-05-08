@@ -64,11 +64,101 @@
             }
         }
     },
+    "AFG": {
+        "separator": ":",
+        "props": {
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false
+            },
+            "fid": {
+                "regex": "numeric",
+                "type": "number",
+                "optional": false
+            },
+            "name": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "surname": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "sex": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "birthPlace": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "residence": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "maritalStatus": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "profession": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "unusefulDate": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "email": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "birthDate": {
+                "regex": "date",
+                "type": "date",
+                "optional": true
+            },
+            "x3": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "x4": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "x5": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "x8": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "x9": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            }
+        }
+    },
     "AUS": {
         "separator": ":",
         "props": {
             "telephone": {
-                "regex": "numeric",
+                "regex": "phone",
                 "type": "string",
                 "optional": false
             },
@@ -177,77 +267,77 @@
                 "type": "string",
                 "optional": true
             },
+            "location1": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "location2": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
             "link": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh1": {
+            "fbLink1": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh2": {
+            "fbLink2": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh3": {
+            "fbLink3": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh4": {
+            "fbLink4": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh5": {
+            "fbLink5": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh6": {
+            "fbLink6": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh7": {
+            "fbLink7": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh8": {
+            "fbLink8": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh9": {
+            "fbLink9": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh10": {
+            "fbLink10": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh11": {
+            "fbLink11": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
             },
-            "boh12": {
-                "regex": "whole_comma",
-                "type": "string",
-                "optional": true
-            },
-            "boh13": {
-                "regex": "whole_comma",
-                "type": "string",
-                "optional": true
-            },
-            "boh14": {
+            "fbLink12": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true
