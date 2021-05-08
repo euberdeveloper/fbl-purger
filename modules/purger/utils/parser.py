@@ -8,9 +8,11 @@ from ...utils.logger import log
 
 REGEXPS = {
     'numeric': r'(?:[\d])',
+    'phone': r'(?:[\+\d])',
     'char': r'(?:[A-Za-z])',
     'uchar': r'(?:[\p{L}\p{M}*])',
     'whole': r'(?:[^:])',
+    'whole_comma': r'(?:[^,])',
     'datetime': r'(?:\d{1,2}\/\d{1,2}\/\d{1,4} \d{1,2}:\d{1,2}:\d{1,2} (?:AM|PM))',
     'date': r'(?:(?:\d{1,2})(?:\/\d{1,2})?(?:\/\d{1,4})?)'
 }
@@ -29,9 +31,11 @@ class Parser:
             return rf'{body}{multiplier}'
 
     def __compute_regex(self, schema: dict) -> str:
-        return '^' + ':'.join([
+        props = schema['props']
+        separator = schema['separator']
+        return '^' + separator.join([
             rf'(?P<{prop}>{self.__regex_from_details(prop, details)})'
-            for prop, details in schema.items()
+            for prop, details in props.items()
         ]) + '$'
 
     def __parse_value(self, value: str, vtype: str):
@@ -64,7 +68,7 @@ class Parser:
     def __parse_matched(self, matched: dict, index: int) -> dict:
         result = {
             prop : self.__parse_value(matched[prop], details['type'])
-            for prop, details in self.schema.items()
+            for prop, details in self.schema['props'].items()
         }
         result['line'] = index
         return result

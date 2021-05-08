@@ -1,126 +1,257 @@
 {
     "default": {
-        "telephone": {
-            "regex": "numeric",
-            "type": "string",
-            "optional": false
-        },
-        "fid": {
-            "regex": "numeric",
-            "type": "number",
-            "optional": false
-        },
-        "name": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "surname": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "sex": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "birthPlace": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "residence": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "maritalStatus": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "profession": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "unusefulDate": {
-            "regex": "datetime",
-            "type": "datetime",
-            "optional": true
-        },
-        "email": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "birthDate": {
-            "regex": "date",
-            "type": "date",
-            "optional": true
+        "separator": ":",
+        "props": {
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false
+            },
+            "fid": {
+                "regex": "phone",
+                "type": "number",
+                "optional": false
+            },
+            "name": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "surname": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "sex": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "birthPlace": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "residence": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "maritalStatus": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "profession": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "unusefulDate": {
+                "regex": "datetime",
+                "type": "datetime",
+                "optional": true
+            },
+            "email": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "birthDate": {
+                "regex": "date",
+                "type": "date",
+                "optional": true
+            }
         }
     },
     "AUS": {
-        "telephone": {
-            "regex": "numeric",
-            "type": "string",
-            "optional": false
-        },
-        "fid": {
-            "regex": "numeric",
-            "type": "number",
-            "optional": false
-        },
-        "name": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "surname": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "sex": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "birthPlace": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "residence": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "maritalStatus": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "profession": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "unusefulDate": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "email": {
-            "regex": "whole",
-            "type": "string",
-            "optional": true
-        },
-        "birthDate": {
-            "regex": "date",
-            "type": "date",
-            "optional": true
+        "separator": ":",
+        "props": {
+            "telephone": {
+                "regex": "numeric",
+                "type": "string",
+                "optional": false
+            },
+            "fid": {
+                "regex": "numeric",
+                "type": "number",
+                "optional": false
+            },
+            "name": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "surname": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "sex": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "birthPlace": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "residence": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "maritalStatus": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "profession": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "unusefulDate": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "email": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true
+            },
+            "birthDate": {
+                "regex": "date",
+                "type": "date",
+                "optional": true
+            }
+        }
+    },
+    "BHR": {
+        "separator": ",",
+        "props": {
+            "fid": {
+                "regex": "numeric",
+                "type": "number",
+                "optional": false
+            },
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false
+            },
+            "name": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "surname": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "email": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "birthDate": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "sex": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "language": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "residence": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "link": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh1": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh2": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh3": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh4": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh5": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh6": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh7": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh8": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh9": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh10": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh11": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh12": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh13": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            },
+            "boh14": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true
+            }
         }
     }
 }
