@@ -7,6 +7,7 @@ from whaaaaat import prompt
 def select_languages(src: str, current_langs: list[str]) -> list[str]:
     current_langs = [l.upper() for l in current_langs]
     raw_options = purger.langs(src)
+    include_all = 'all' in current_langs
     options = [
         { 'name': option, 'value': option, 'checked': include_all or option in current_langs }
         for option in raw_options
