@@ -4,7 +4,7 @@ from joblib import Parallel, delayed
 from typing import Optional
 
 from ..utils.logger import log
-from .utils.defaults import DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_PARALLEL, DEFAULT_THREADS
+from .utils.defaults import DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_PARALLEL, DEFAULT_THREADS, DEFAULT_FORCE, DEFAULT_SKIP
 from .utils.filedir import FileDir
 from .utils.uploader import Uploader
 from .utils.parser import parse_line
@@ -27,11 +27,19 @@ def _purge_asset(path: Path, uploader: Uploader) -> None:
             uploader.append(person)
         uploader.upload()
 
-def _purge_lang(lang: str, threshold: int, dbname: str, filedir: FileDir) -> None:
+def _purge_lang(lang: str, threshold: int, dbname: str, force: bool, skip: bool, filedir: FileDir) -> None:
     log(f'Start purge lang {lang}')
     assets = filedir.retrieve_lang_assets(lang)
     lang_full_name = filedir.retrieve_lang_fullname(lang)
-    uploader = Uploader(lang_full_name, threshold, dbname)
+
+    try:
+        uploader = Uploader(lang_full_name, threshold, dbname, force)
+    except Exception as err:
+        if skip:
+            log(str(err))
+            return
+        else:
+            raise err
 
     for asset in assets:
         log(f'Start purge lang {lang} asset {asset.name}')
@@ -42,7 +50,7 @@ def _purge_lang(lang: str, threshold: int, dbname: str, filedir: FileDir) -> Non
     log(f'Finish purge lang {lang}')
 
 
-def purge(src = DEFAULT_SRC, langs: list[str] = DEFAULT_LANGS, dbname = DEFAULT_DBNAME, threshold = DEFAULT_THRESHOLD, parallel = DEFAULT_PARALLEL, threads = DEFAULT_THREADS) -> None:
+def purge(src = DEFAULT_SRC, langs: list[str] = DEFAULT_LANGS, dbname = DEFAULT_DBNAME, threshold = DEFAULT_THRESHOLD, parallel = DEFAULT_PARALLEL, threads = DEFAULT_THREADS, force = DEFAULT_FORCE, skip = DEFAULT_SKIP) -> None:
     src_path = Path(src)
     _print_settings(src_path, langs, dbname, threshold, parallel, threads)
 
@@ -50,10 +58,10 @@ def purge(src = DEFAULT_SRC, langs: list[str] = DEFAULT_LANGS, dbname = DEFAULT_
     langs = filedir.retrieve_langs() if 'all' in langs else langs
 
     if parallel:
-        Parallel(n_jobs=threads)(delayed(_purge_lang)(lang, threshold, dbname, filedir) for lang in langs)
+        Parallel(n_jobs=threads)(delayed(_purge_lang)(lang, threshold, dbname, force, skip, filedir) for lang in langs)
     else:
         for lang in langs:
-            _purge_lang(lang, threshold, dbname, filedir)
+            _purge_lang(lang, threshold, dbname, force, skip, filedir)
 
 
 def langs(src = DEFAULT_SRC) -> list[str]:

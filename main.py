@@ -32,10 +32,12 @@ def cli():
 @click.option('-p', '--parallel/--no-parallel', is_flag=True, show_default=True, help='If uploading more than a language, parallelize the uploadings')
 @click.option('--threads', type=click.INT, default=multiprocessing.cpu_count(), show_default=True, help='If parallel is active, specify the number of parallel processes. Default is the number of cores of the CPU.')
 @click.option('-c', '--choose-langs/--no-choose-langs', is_flag=True, show_default=True, help='If the user will be asked to select the languages')
-def purge(*, src: str, langs: list[str], dbname: str, threshold: int, parallel: bool, threads: int, choose_langs: bool):
+@click.option('-f', '--force/--no-force', is_flag=True, show_default=True, help='If already populated collections will be overriden. Overrides skip behaviour.')
+@click.option('--skip/--no-skip', is_flag=True, show_default=True, help='If uploading more than a language, parallelize the uploadings')
+def purge(*, src: str, langs: list[str], dbname: str, threshold: int, parallel: bool, threads: int, choose_langs: bool, force: bool, skip: bool):
     if choose_langs:
         langs = select_languages(src, langs)
-    purger.purge(src, langs, dbname, threshold, parallel, threads)
+    purger.purge(src, langs, dbname, threshold, parallel, threads, force, skip)
 
 @cli.command(help='Shows the languages available in the dataset')
 @click.option('-s', '--src', type=click.STRING, default='datasets', show_default=True, help='Folder containing the raw datasets')
