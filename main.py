@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 import click
 import multiprocessing
-import modules.purger.purger as purger
 from whaaaaat import prompt
 
-def select_languages(src: str, current_langs: list[str]) -> list[str]:
+import modules.purger.purger as purger
+import modules.postprocessor.postprocessor as postprocessor
+
+def select_languages(available_langs: list[str], current_langs: list[str]) -> list[str]:
     current_langs = [l.upper() for l in current_langs]
-    raw_options = purger.langs(src)
     include_all = 'all' in current_langs
     options = [
         { 'name': option, 'value': option, 'checked': include_all or option in current_langs }
-        for option in raw_options
+        for option in available_langs
     ]
     answer = prompt({
         'name': 'langs',
@@ -20,7 +21,7 @@ def select_languages(src: str, current_langs: list[str]) -> list[str]:
     })
     return answer['langs']
 
-@click.group(help="Tool to purge, raw and postprocess your raw fbl datasets")
+@click.group(help="Tool to purge your raw fbl datasets and to postprocess your purged ones")
 def cli():
     pass
 
@@ -36,13 +37,27 @@ def cli():
 @click.option('--skip/--no-skip', is_flag=True, show_default=True, help='If uploading more than a language, parallelize the uploadings')
 def purge(*, src: str, langs: list[str], dbname: str, threshold: int, parallel: bool, threads: int, choose_langs: bool, force: bool, skip: bool):
     if choose_langs:
-        langs = select_languages(src, langs)
+        available_langs = purger.langs(src)
+        langs = select_languages(available_langs, langs)
     purger.purge(src, langs, dbname, threshold, parallel, threads, force, skip)
 
-@cli.command(help='Shows the languages available in the dataset')
+
+@cli.group(help="Writes the available langs")
+def langs():
+    pass
+
+@langs.command(help='Shows the languages available in the raw datasets')
 @click.option('-s', '--src', type=click.STRING, default='datasets', show_default=True, help='Folder containing the raw datasets')
-def langs(*, src: str):
+def raw(*, src: str):
     langs = purger.langs(src)
+    langs_list = "\n".join(langs)
+    click.echo(click.style('Available langs are:', fg='yellow', bold=True))
+    click.echo(click.style(f'{langs_list}', fg='blue', bold=True))
+
+@langs.command(help='Shows the languages available in the purged database')
+@click.option('-d', '--dbname', type=click.STRING, default='fbl', show_default=True, help='Name of the MongoDB database')
+def raw(*, dbname: str):
+    langs = postprocessor.langs(dbname)
     langs_list = "\n".join(langs)
     click.echo(click.style('Available langs are:', fg='yellow', bold=True))
     click.echo(click.style(f'{langs_list}', fg='blue', bold=True))
