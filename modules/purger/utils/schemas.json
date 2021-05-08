@@ -1,0 +1,64 @@
+{
+    "default": {
+        "telephone": {
+            "regex": "numeric",
+            "type": "string",
+            "optional": false
+        },
+        "fid": {
+            "regex": "numeric",
+            "type": "number",
+            "optional": false
+        },
+        "name": {
+            "regex": "whole",
+            "type": "string",
+            "optional": false
+        },
+        "surname": {
+            "regex": "whole",
+            "type": "string",
+            "optional": false
+        },
+        "sex": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "birthPlace": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "residence": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "maritalStatus": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "profession": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "unusefulDate": {
+            "regex": "datetime",
+            "type": "datetime",
+            "optional": true
+        },
+        "email": {
+            "regex": "whole",
+            "type": "string",
+            "optional": true
+        },
+        "birthDate": {
+            "regex": "date",
+            "type": "date",
+            "optional": true
+        }
+    }
+}
