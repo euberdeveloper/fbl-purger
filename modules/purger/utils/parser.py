@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 from json import loads
-from datetime import datetime, date
+from datetime import datetime
 from typing import Optional
 
 from ...utils.logger import log
@@ -44,13 +44,19 @@ class Parser:
             return datetime.strptime(value, "%m/%d/%Y %H:%M:%S %p")
         if vtype == 'date':
             parts = value.split('/')
-            month = parts[0]
-            day = parts[1]
+            month = int(parts[0])
+            day = int(parts[1])
             try:
-                year = parts[2]
+                year = int(parts[2])
             except:
-                year = 1
-            return date(year, month, day)
+                # It has to be bisestile or it raises an error for 29/02 :)
+                year = 12
+
+            try:
+                return datetime(year, month, day)
+            except:
+                print(month, day)
+                raise Exception('diocan')
         log(f'Unrecognized type {vtype}')
         
 
@@ -71,7 +77,20 @@ class Parser:
         self.schema = self.__fetch_schemas(lang)
         self.regex = self.__compute_regex(self.schema)
         self.failed_line = None
+        self.shit = 0
 
     def parse_line(self, index: int, line: str) -> Optional[dict]:
         extracted = self.__parse_line(line)
+
+        if extracted is None:
+            if self.failed_line:
+                whole_line = self.failed_line + line
+                extracted = self.__parse_line(whole_line)
+                self.failed_line = whole_line if extracted is None else None
+            else:
+                self.failed_line = line
+        elif self.failed_line:
+            log(f'Failed parsing line at index {index}')
+            self.failed_line = None
+
         return None if extracted is None else self.__parse_matched(extracted, index)

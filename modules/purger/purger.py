@@ -7,7 +7,7 @@ from ..utils.logger import log
 from .utils.defaults import DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_PARALLEL, DEFAULT_THREADS, DEFAULT_FORCE, DEFAULT_SKIP
 from .utils.filedir import FileDir
 from .utils.uploader import Uploader
-from .utils.parser import parse_line
+from .utils.parser import Parser
 
 def _print_settings(src: Path, langs: list[str], dbname: str, threshold: int, parallel: bool, threads: int) -> None:
     print('---------------')
@@ -19,18 +19,23 @@ def _print_settings(src: Path, langs: list[str], dbname: str, threshold: int, pa
     print(f'If I parallelize, I will use {threads} processes')
     print('---------------')
 
-def _purge_asset(path: Path, uploader: Uploader) -> None:
+#508904
+#130.1MB
+
+def _purge_asset(path: Path, uploader: Uploader, parser: Parser) -> None:
     with bz2.open(path, 'rt') as input_file:
-        for line in input_file:
+        for index, line in enumerate(input_file):
             line = line.rstrip('\n')
-            person = parse_line(line)
-            uploader.append(person)
+            profile = parser.parse_line(index, line)
+            if profile:
+                uploader.append(profile)
         uploader.upload()
 
 def _purge_lang(lang: str, threshold: int, dbname: str, force: bool, skip: bool, filedir: FileDir) -> None:
     log(f'Start purge lang {lang}')
     assets = filedir.retrieve_lang_assets(lang)
     lang_full_name = filedir.retrieve_lang_fullname(lang)
+    parser = Parser(lang)
 
     try:
         uploader = Uploader(lang_full_name, threshold, dbname, force)
@@ -43,7 +48,7 @@ def _purge_lang(lang: str, threshold: int, dbname: str, force: bool, skip: bool,
 
     for asset in assets:
         log(f'Start purge lang {lang} asset {asset.name}')
-        _purge_asset(asset, uploader)
+        _purge_asset(asset, uploader, parser)
         log(f'Finish purge lang {lang} asset {asset.name}')
 
     uploader.destroy()

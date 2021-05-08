@@ -13,12 +13,12 @@
         "name": {
             "regex": "whole",
             "type": "string",
-            "optional": false
+            "optional": true
         },
         "surname": {
             "regex": "whole",
             "type": "string",
-            "optional": false
+            "optional": true
         },
         "sex": {
             "regex": "whole",
