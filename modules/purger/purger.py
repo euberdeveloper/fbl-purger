@@ -4,14 +4,14 @@ from joblib import Parallel, delayed
 from typing import Optional
 
 from ..utils import logger as log
-from .utils.defaults import DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_BIAS, DEFAULT_PARALLEL, DEFAULT_PROCESSES, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI
+from .utils.defaults import DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_BIAS, DEFAULT_PARALLEL, DEFAULT_PROCESSES, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI, DEFAULT_SKIP_FIRST_LINE
 from .utils.filedir import FileDir
 from .utils.uploader import Uploader
 from .utils.parser import Parser
 
 class Purger:
 
-    def __set_fields(self, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, force: bool, skip: bool, octopus: bool, nazi: bool):
+    def __set_fields(self, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, force: bool, skip: bool, octopus: bool, nazi: bool, skip_first_line: bool):
         self.langs = self.available_langs if 'all' in langs else langs
         self.dbname = dbname
         self.threshold = threshold
@@ -22,6 +22,7 @@ class Purger:
         self.skip = skip
         self.octopus = octopus
         self.nazi = nazi
+        self.skip_first_line = skip_first_line
 
     def __print_settings(self) -> None:
         print('---------------')
@@ -36,6 +37,7 @@ class Purger:
         print(f'If a collection already exists, will I override it? {self.force}')
         print(f'If a collection already exists, will I skip it? {self.skip}')
         print(f'If a line fails, will I terminate the program? {self.nazi}')
+        print(f'Skip first line: {self.skip_first_line}')
         print('---------------')
 
     def __purge(self) -> None:
@@ -63,18 +65,19 @@ class Purger:
 
         try:
             lang_full_name = self.filedir.retrieve_lang_fullname(lang)
-            uploader = Uploader(lang_full_name, asset.name, self.threshold, self.dbname, self.force)
+            uploader = Uploader(lang_full_name, asset.name, self.threshold, self.dbname, self.force and index == 0)
         except Exception as err:
-            if self.skip and index == 0:
-                log.warn('Skipping purging, collection already exists', lang=lang, asset=asset.name)
-                return
-            else:
-                log.err('Collection already exists', lang=lang, asset=asset.name)
-                raise err
+            if index == 0:
+                if self.skip:
+                    log.warn('Skipping purging, collection already exists', lang=lang, asset=asset.name)
+                    return
+                else:
+                    log.err('Collection already exists', lang=lang, asset=asset.name)
+                    raise err
 
         with bz2.open(asset, 'rt') as input_file:
             # in some langs such as BRA two files split a line
-            if bias > 0:
+            if index > 0 and self.skip_first_line:
                 next(input_file)
             for index, line in enumerate(input_file):
                 line = line.rstrip('\n')
@@ -100,8 +103,8 @@ class Purger:
         self.filedir = FileDir(src_path)
         self.available_langs = self.filedir.retrieve_langs()
 
-    def purge(self, langs: list[str] = DEFAULT_LANGS, dbname = DEFAULT_DBNAME, threshold = DEFAULT_THRESHOLD, bias = DEFAULT_BIAS, parallel = DEFAULT_PARALLEL, processes = DEFAULT_PROCESSES, force = DEFAULT_FORCE, skip = DEFAULT_SKIP, octopus = DEFAULT_OCTOPUS, nazi = DEFAULT_NAZI) -> None:
-        self.__set_fields(langs, dbname, threshold, bias, parallel, processes, force, skip, octopus, nazi)
+    def purge(self, langs: list[str] = DEFAULT_LANGS, dbname = DEFAULT_DBNAME, threshold = DEFAULT_THRESHOLD, bias = DEFAULT_BIAS, parallel = DEFAULT_PARALLEL, processes = DEFAULT_PROCESSES, force = DEFAULT_FORCE, skip = DEFAULT_SKIP, octopus = DEFAULT_OCTOPUS, nazi = DEFAULT_NAZI, skip_first_line = DEFAULT_SKIP_FIRST_LINE) -> None:
+        self.__set_fields(langs, dbname, threshold, bias, parallel, processes, force, skip, octopus, nazi, skip_first_line)
         self.__print_settings()
         self.__purge()
 

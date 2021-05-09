@@ -38,12 +38,13 @@ def cli():
 @click.option('--skip/--no-skip', is_flag=True, show_default=True, help='If when encountering an already populated collection it will be skipped')
 @click.option('-o', '--octopus/--no-octopus', is_flag=True, show_default=True, help='If parallel is set, purge even the assets of a same language in parallel')
 @click.option('-n', '--nazi/--no-nazi', is_flag=True, show_default=True, help='If it will fail as soon as an invalid line or error is encountered')
-def purge(*, src: str, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, choose_langs: bool, force: bool, skip: bool, octopus: bool, nazi: bool):
+@click.option('--skip-first-line/--no-skip-first-line', is_flag=True, show_default=True, help='If a language has more han an asset, it could happen that a line is split between two assets. If this flag is enabled, the first line of all but the first assets is skipped.')
+def purge(*, src: str, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, choose_langs: bool, force: bool, skip: bool, octopus: bool, nazi: bool, skip_first_line: bool):
     purger = Purger(src)
     if choose_langs:
         available_langs = purger.available_langs
         langs = select_languages(available_langs, langs)
-    purger.purge(langs, dbname, threshold, bias, parallel, processes, force, skip, octopus, nazi)
+    purger.purge(langs, dbname, threshold, bias, parallel, processes, force, skip, octopus, nazi, skip_first_line)
 
 @cli.command(help='Postprocesses a raw collection into a parsed collection')
 @click.option('-l', '--langs', type=click.STRING, multiple=True, default=[], show_default=True, help='Languages to process. If "all" is passed, all the languages are selected')
