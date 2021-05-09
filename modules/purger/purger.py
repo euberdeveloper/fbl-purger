@@ -12,7 +12,7 @@ from .utils.parser import Parser
 class Purger:
 
     def __set_fields(self, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, force: bool, skip: bool, octopus: bool, nazi: bool):
-        self.langs = filedir.retrieve_langs() if 'all' in langs else langs
+        self.langs = self.available_langs if 'all' in langs else langs
         self.dbname = dbname
         self.threshold = threshold
         self.bias = bias
@@ -32,7 +32,6 @@ class Purger:
         print(f'Bias added to assets of same lang to avoid conflicts for the field line is {self.bias}')
         print(f'Will I try to parallelize? {self.parallel}')
         print(f'If I parallelize, I will use {self.processes} processes')
-        print(f'If I parallelize, I will parallelize even the assets? {self.octopus}')
         print(f'If I parallelize, I will parallelize even the assets? {self.octopus}')
         print(f'If a collection already exists, will I override it? {self.force}')
         print(f'If a collection already exists, will I skip it? {self.skip}')

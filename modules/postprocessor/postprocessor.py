@@ -3,72 +3,79 @@ from typing import Optional
 
 from ..utils import logger as log
 from .utils.dbschema import DbSchema
-from .utils.dbprocessor import fetch_processed_data, upload_processed_data
-from .utils.defaults import DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_PARALLEL, DEFAULT_THREADS, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI
+from .utils.dbprocessor import DbProcessor
+from .utils.defaults import DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_PARALLEL, DEFAULT_PROCESSES, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI
 
-def _print_settings(langs: list[str], dbname: str, threshold: int, parallel: bool, threads: int) -> None:
-    print('---------------')
-    print(f'Languages to parse are {" ".join(langs)}')
-    print(f'Name of db is {dbname}')
-    print(f'Threshold before updating is {threshold}')
-    print(f'Will I try to parallelize? {parallel}')
-    print(f'If I parallelize, I will use {threads} processes')
-    print('---------------')
+class Postprocessor:
 
-def _process_lang(lang: str, threshold: int, force: bool, skip: bool, nazi: bool, dbschema: DbSchema) -> None:
-    log(f'Start process lang {lang}')
+    def __set_fields(self, langs: list[str], threshold: int, parallel: bool, processes: int, force: bool, skip: bool, nazi: bool):
+        self.langs = self.available_langs if 'all' in langs else langs
+        self.threshold = threshold
+        self.parallel = parallel
+        self.processes = processes
+        self.force = force
+        self.skip = skip
+        self.nazi = nazi
 
-    raw_coll = dbschema.retrieve_lang_raw_coll(lang)
-    if raw_coll is None:
-        log(f'{lang} raw collection not found')
-        if nazi:
-            raise Exception(f'{lang} raw collection not found')
+    def __print_settings(self) -> None:
+        print('---------------')
+        print(f'Languages to parse are {" ".join(self.langs)}')
+        print(f'Name of db is {self.dbname}')
+        print(f'Threshold of bufferized profiles before updating is {self.threshold}')
+        print(f'Will I try to parallelize? {self.parallel}')
+        print(f'If I parallelize, I will use {self.processes} processes')
+        print(f'If a parsed collection already exists, will I override it? {self.force}')
+        print(f'If a parsed collection already exists, will I skip it? {self.skip}')
+        print(f'If a line fails, will I terminate the program? {self.nazi}')
+        print('---------------')
 
-    parsed_coll = dbschema.retrieve_lang_parsed_coll(lang)
-    if parsed_coll is not None:
-        if force:
-            log(f'{lang} parsed collection already exists, dropping')
-            parsed_coll.drop()
-        elif skip:
-            log(f'{lang} parsed collection already exists, skipping')
-            return
-        elif nazi:
-            log(f'{lang} parsed collection already exists')
-            raise Exception(f'{lang} parsed collection already exists')
-    else:
-        parsed_coll = dbschema.create_lang_parsed_coll(lang)
+    def __process(self) -> None:
+        if self.parallel:
+            Parallel(n_jobs=self.processes)(
+                delayed(self._process_lang)(lang)
+                for lang in self.langs
+            )
+        else:
+            for lang in self.langs:
+                self._process_lang(lang)
 
-    log(f'Start fetch lang {lang}')
-    profiles = fetch_processed_data(raw_coll)
-    log(f'Stop fetch lang {lang}')
+    def _process_lang(self, lang: str) -> None:
+        log.info('Start processing lang', lang=lang)
+        dbschema = DbSchema(self.dbname)
 
-    log(f'Start upload lang {lang}')
-    upload_processed_data(parsed_coll, profiles, threshold)
-    log(f'Stop upload lang {lang}')
+        raw_coll = dbschema.retrieve_lang_raw_coll(lang)
+        if raw_coll is None:
+            txt = f'Raw collection not found'
+            log.err(txt)
+            raise Exception(txt)
 
-    log(f'End process lang {lang}')
-    
-def _process_lang_with_new_dbschema(lang: str, threshold: int, force: bool, skip: bool, nazi: bool, dbname: str):
-    dbschema = DbSchema(dbname)
-    _process_lang(lang, threshold, force, skip, nazi, dbschema)
-    dbschema.destroy()
+        parsed_coll = dbschema.retrieve_lang_parsed_coll(lang)
+        if parsed_coll is not None:
+            if self.force:
+                log.warn(f'Parsed collection already exists, dropping', lang=lang)
+                parsed_coll.drop()
+            elif self.skip:
+                log.warn(f'Parsed collection already exists, skipping', lang=lang)
+                return
+            elif self.nazi:
+                txt = f'Parsed collection already exists'
+                log.err(txt, lang=lang)
+                raise Exception(txt)
+        else:
+            parsed_coll = dbschema.create_lang_parsed_coll(lang)
 
-def process(langs: list[str] = DEFAULT_LANGS, dbname = DEFAULT_DBNAME, threshold = DEFAULT_THRESHOLD, parallel = DEFAULT_PARALLEL, threads = DEFAULT_THREADS, force = DEFAULT_FORCE, skip = DEFAULT_SKIP, nazi = DEFAULT_NAZI) -> None:
-    _print_settings(langs, dbname, threshold, parallel, threads)
+        dbprocessor = DbProcessor(lang, self.threshold, raw_coll, parsed_coll)
+        dbprocessor.lavora()
 
-    dbschema = DbSchema(dbname)
-    langs = dbschema.retrieve_langs() if 'all' in langs else langs
+        dbschema.destroy()
+        log.succ('Finish processing lang', lang=lang)
 
-    if parallel:
-        Parallel(n_jobs=threads)(delayed(_process_lang_with_new_dbschema)(lang, threshold, force, skip, nazi, dbname) for lang in langs)
-    else:
-        for lang in langs:
-            _process_lang(lang, threshold, force, skip, nazi, dbschema)
+    def __init__(self, dbname = DEFAULT_DBNAME):
+        self.dbname = dbname
+        self.dbschema = DbSchema(dbname)
+        self.available_langs = self.dbschema.retrieve_langs()
 
-    dbschema.destroy()
-
-def langs(dbname = DEFAULT_DBNAME) -> list[str]:
-    dbschema = DbSchema(dbname)
-    langs = dbschema.retrieve_langs()
-    dbschema.destroy()
-    return langs
+    def process(self, langs: list[str] = DEFAULT_LANGS, threshold = DEFAULT_THRESHOLD, parallel = DEFAULT_PARALLEL, processes = DEFAULT_PROCESSES, force = DEFAULT_FORCE, skip = DEFAULT_SKIP, nazi = DEFAULT_NAZI) -> None:
+        self.__set_fields(langs, threshold, parallel, processes, force, skip, nazi)
+        self.__print_settings()
+        self.__process()
