@@ -69,6 +69,7 @@ class Parser:
         result = {
             prop : self.__parse_value(matched[prop], details['type'])
             for prop, details in self.schema['props'].items()
+            if details['keep']
         }
         result['line'] = index
         return result
