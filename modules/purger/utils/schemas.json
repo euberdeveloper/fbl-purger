@@ -137,7 +137,7 @@
                 "regex": "whole",
                 "type": "string",
                 "optional": true,
-                "keep": true
+                "keep": false
             },
             "email": {
                 "regex": "whole",
@@ -151,35 +151,35 @@
                 "optional": true,
                 "keep": true
             },
+            "x0": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x1": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x2": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
             "x3": {
                 "regex": "whole",
                 "type": "string",
                 "optional": true,
-                "keep": true
+                "keep": false
             },
             "x4": {
                 "regex": "whole",
                 "type": "string",
                 "optional": true,
-                "keep": true
-            },
-            "x5": {
-                "regex": "whole",
-                "type": "string",
-                "optional": true,
-                "keep": true
-            },
-            "x8": {
-                "regex": "whole",
-                "type": "string",
-                "optional": true,
-                "keep": true
-            },
-            "x9": {
-                "regex": "whole",
-                "type": "string",
-                "optional": true,
-                "keep": true
+                "keep": false
             }
         }
     },
