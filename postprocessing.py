@@ -2,15 +2,20 @@ from pymongo import MongoClient
 from datetime import datetime
 
 client = MongoClient()
-database = client.get_database('facebookLeaks')
-collection_in = database.get_collection('ITA_Italia')
-collection_out = database.get_collection('ITA_Italia_parsed')
+database = client.get_database('fbl')
+collection_in = database.get_collection('BRA_Brasile')
+collection_out = database.get_collection('BRA_Brasile_parsed')
 
 print(f'Init aggregation', datetime.now().isoformat())
 profiles = collection_in.aggregate([
     {
+        '$sort': {
+            'line': 1
+        }
+    },
+    {
         '$group': {
-            '_id': '$facebookId', 
+            '_id': '$fid', 
             'current': {
                 '$last': '$$ROOT'
             }, 
