@@ -1,7 +1,7 @@
 from joblib import Parallel, delayed
 from typing import Optional
 
-from ..utils.logger import log  
+from ..utils import logger as log
 from .utils.dbschema import DbSchema
 from .utils.dbprocessor import fetch_processed_data, upload_processed_data
 from .utils.defaults import DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_PARALLEL, DEFAULT_THREADS, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI

@@ -4,8 +4,9 @@ from json import loads
 from datetime import datetime
 from typing import Optional
 
-from ...utils.logger import log
+from ...utils import logger as log
 
+# regexps to parse the lines
 REGEXPS = {
     'numeric': r'(?:[\d])',
     'phone': r'(?:[\+\d])',
@@ -16,6 +17,7 @@ REGEXPS = {
     'datetime': r'(?:\d{1,2}\/\d{1,2}\/\d{1,4} \d{1,2}:\d{1,2}:\d{1,2} (?:AM|PM))',
     'date': r'(?:(?:\d{1,2})(?:\/\d{1,2})?(?:\/\d{1,4})?)'
 }
+# if more than n subsequent lines fail, something is not working
 MAX_FAILURES = 10
 
 class Parser:
@@ -56,13 +58,8 @@ class Parser:
             except:
                 # It has to be bisestile or it raises an error for 29/02 :)
                 year = 12
-
-            try:
-                return datetime(year, month, day)
-            except:
-                print(month, day)
-                raise Exception('diocan')
-        log(f'Unrecognized type {vtype}')
+            return datetime(year, month, day)
+        log.warn(f'Unrecognized type {vtype}', lang=self.lang, asset=self.asset)
         
 
     def __parse_matched(self, matched: dict, index: int) -> dict:
@@ -78,11 +75,14 @@ class Parser:
         matched = re.match(self.regex, line)
         return None if matched is None else matched.groupdict()
 
-    def __init__(self,  lang: str, nazi: bool):
+    def __init__(self,  lang: str, asset: str, nazi: bool):
         self.lang = lang
+        self.asset = asset
         self.nazi = nazi
+
         self.schema = self.__fetch_schemas(lang)
         self.regex = self.__compute_regex(self.schema)
+        
         self.failed_line = None
         self.subseq_failures = 0
 
@@ -100,17 +100,19 @@ class Parser:
                 self.subseq_failures += 1
             if self.subseq_failures > MAX_FAILURES:
                 if self.nazi:
-                    log(f'{self.lang}, too many failures ({self.subseq_failures})')
-                    raise Exception(f'{self.lang}, too many failures ({self.subseq_failures})')
+                    txt = f'Too many lines failed ({self.subseq_failures})'
+                    log.err(txt, lang=self.lang, asset=self.asset)
+                    raise Exception(txt)
                 else:
-                    log(f'WARNING {self.lang}, {self.subseq_failures} subsequent failures, file is probably nonsense')
+                    log.warn(f'{self.subseq_failures} subsequent failures, file is probably nonsense', lang=self.lang, asset=self.asset)
                     self.failed_line = None
         elif self.failed_line:
+            txt = f'Failed parsing line at (biased) index {index}'
             if self.nazi:
-                log(f'Failed parsing {self.lang} line at index {index}')
+                log.err(txt)
                 raise Exception(f'Failed parsing {self.lang} line at index {index}')
             else:
-                log(f'Failed parsing {self.lang} line at index {index}')
+                log.warn(txt)
             self.failed_line = None
 
         return None if extracted is None else self.__parse_matched(extracted, index)
