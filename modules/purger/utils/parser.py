@@ -20,6 +20,7 @@ REGEXPS = {
 # if more than n subsequent lines fail, something is not working
 MAX_FAILURES = 10
 
+
 class Parser:
     def __fetch_schemas(self, lang: str) -> dict:
         with open(Path(__file__).parent.joinpath('schemas.json').absolute()) as schemas_file:
@@ -28,9 +29,9 @@ class Parser:
             return schemas[lang] if lang in schemas else schemas['default']
 
     def __regex_from_details(self, prop: str, details: dict) -> str:
-            body = REGEXPS[details['regex']]
-            multiplier = '*' if details['optional'] else '+'
-            return rf'{body}{multiplier}'
+        body = REGEXPS[details['regex']]
+        multiplier = '*' if details['optional'] else '+'
+        return rf'{body}{multiplier}'
 
     def __compute_regex(self, schema: dict) -> str:
         props = schema['props']
@@ -55,16 +56,16 @@ class Parser:
             day = int(parts[1])
             try:
                 year = int(parts[2])
-            except:
+            except Exception:
                 # It has to be bisestile or it raises an error for 29/02 :)
                 year = 12
             return datetime(year, month, day)
-        log.warn(f'Unrecognized type {vtype}', lang=self.lang, asset=self.asset)
-        
+        log.warn(f'Unrecognized type {vtype}',
+                 lang=self.lang, asset=self.asset)
 
     def __parse_matched(self, matched: dict, index: int) -> dict:
         result = {
-            prop : self.__parse_value(matched[prop], details['type'])
+            prop: self.__parse_value(matched[prop], details['type'])
             for prop, details in self.schema['props'].items()
             if details['keep']
         }
@@ -82,7 +83,7 @@ class Parser:
 
         self.schema = self.__fetch_schemas(lang)
         self.regex = self.__compute_regex(self.schema)
-        
+
         self.failed_line = None
         self.subseq_failures = 0
 
@@ -104,13 +105,13 @@ class Parser:
                     log.err(txt, lang=self.lang, asset=self.asset)
                     raise Exception(txt)
                 else:
-                    log.warn(f'{self.subseq_failures} subsequent failures, file is probably nonsense', lang=self.lang, asset=self.asset)
+                    log.warn(f'{self.subseq_failures} subsequent failures, file is probably nonsense',
+                             lang=self.lang, asset=self.asset)
                     self.failed_line = None
         elif self.failed_line:
-            txt = f'Failed parsing line at (biased) index {index}'
+            txt = f'Failed parsing line at (biased) index {index - 1}'
             if self.nazi:
-                log.err(txt)
-                raise Exception(f'Failed parsing {self.lang} line at index {index}')
+                raise Exception(txt)
             else:
                 log.warn(txt)
             self.failed_line = None
