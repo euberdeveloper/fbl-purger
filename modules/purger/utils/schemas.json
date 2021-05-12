@@ -485,5 +485,154 @@
                 "keep": true
             }
         }
+    },
+    "DZA": {
+        "separator": ",",
+        "props": {
+            "fid": {
+                "regex": "numeric",
+                "type": "number",
+                "optional": false,
+                "keep": true
+            },
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false,
+                "keep": true
+            },
+            "name": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "surname": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "email": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthDate": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "sex": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "language": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "residence": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "location1": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "location2": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "link": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink1": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink2": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink3": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink4": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink5": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink6": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink7": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink8": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink9": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink10": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink11": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink12": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            }
+        }
     }
 }
