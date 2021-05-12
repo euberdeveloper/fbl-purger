@@ -1,10 +1,10 @@
 from joblib import Parallel, delayed
-from typing import Optional
 
 from ..utils import logger as log
 from .utils.dbschema import DbSchema
 from .utils.dbprocessor import DbProcessor
-from .utils.defaults import DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_PARALLEL, DEFAULT_PROCESSES, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI
+from .utils.defaults import DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_PARALLEL, DEFAULT_PROCESSES, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_NAZI
+
 
 class Postprocessor:
 
@@ -21,11 +21,14 @@ class Postprocessor:
         print('---------------')
         print(f'Languages to parse are {" ".join(self.langs)}')
         print(f'Name of db is {self.dbname}')
-        print(f'Threshold of bufferized profiles before updating is {self.threshold}')
+        print(
+            f'Threshold of bufferized profiles before updating is {self.threshold}')
         print(f'Will I try to parallelize? {self.parallel}')
         print(f'If I parallelize, I will use {self.processes} processes')
-        print(f'If a parsed collection already exists, will I override it? {self.force}')
-        print(f'If a parsed collection already exists, will I skip it? {self.skip}')
+        print(
+            f'If a parsed collection already exists, will I override it? {self.force}')
+        print(
+            f'If a parsed collection already exists, will I skip it? {self.skip}')
         print(f'If a line fails, will I terminate the program? {self.nazi}')
         print('---------------')
 
@@ -45,20 +48,20 @@ class Postprocessor:
 
         raw_coll = dbschema.retrieve_lang_raw_coll(lang)
         if raw_coll is None:
-            txt = f'Raw collection not found'
+            txt = 'Raw collection not found'
             log.err(txt)
             raise Exception(txt)
 
         parsed_coll = dbschema.retrieve_lang_parsed_coll(lang)
         if parsed_coll is not None:
             if self.force:
-                log.warn(f'Parsed collection already exists, dropping', lang=lang)
+                log.warn('Parsed collection already exists, dropping', lang=lang)
                 parsed_coll.drop()
             elif self.skip:
-                log.warn(f'Parsed collection already exists, skipping', lang=lang)
+                log.warn('Parsed collection already exists, skipping', lang=lang)
                 return
             elif self.nazi:
-                txt = f'Parsed collection already exists'
+                txt = 'Parsed collection already exists'
                 log.err(txt, lang=lang)
                 raise Exception(txt)
         else:
@@ -70,12 +73,13 @@ class Postprocessor:
         dbschema.destroy()
         log.succ('Finish processing lang', lang=lang)
 
-    def __init__(self, dbname = DEFAULT_DBNAME):
+    def __init__(self, dbname=DEFAULT_DBNAME):
         self.dbname = dbname
-        self.dbschema = DbSchema(dbname)
-        self.available_langs = self.dbschema.retrieve_langs()
 
-    def process(self, langs: list[str] = DEFAULT_LANGS, threshold = DEFAULT_THRESHOLD, parallel = DEFAULT_PARALLEL, processes = DEFAULT_PROCESSES, force = DEFAULT_FORCE, skip = DEFAULT_SKIP, nazi = DEFAULT_NAZI) -> None:
+        dbschema = DbSchema(dbname)
+        self.available_langs = dbschema.retrieve_langs()
+
+    def process(self, langs: list[str] = DEFAULT_LANGS, threshold=DEFAULT_THRESHOLD, parallel=DEFAULT_PARALLEL, processes=DEFAULT_PROCESSES, force=DEFAULT_FORCE, skip=DEFAULT_SKIP, nazi=DEFAULT_NAZI) -> None:
         self.__set_fields(langs, threshold, parallel, processes, force, skip, nazi)
         self.__print_settings()
         self.__process()
