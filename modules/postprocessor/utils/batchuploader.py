@@ -1,6 +1,7 @@
 from pymongo.collection import Collection
 from ...utils import logger as log
 
+
 class BatchUploader:
     def __init__(self, lang: str, threshold: int, collection: Collection):
         self.lang = lang

@@ -3,6 +3,7 @@ from pymongo.collection import Collection, CommandCursor
 from ...utils import logger as log
 from .batchuploader import BatchUploader
 
+
 class DbProcessor:
 
     def __fetch_processed_data(self) -> CommandCursor:
@@ -13,10 +14,10 @@ class DbProcessor:
         }
         group_by_fid = {
             '$group': {
-                '_id': '$fid', 
+                '_id': '$fid',
                 'current': {
                     '$last': '$$ROOT'
-                }, 
+                },
                 'all': {
                     '$push': '$$ROOT'
                 }
@@ -24,7 +25,7 @@ class DbProcessor:
         }
         handle_history = {
             '$project': {
-                'current': '$current', 
+                'current': '$current',
                 'history': {
                     '$cond': [
                         {
@@ -61,7 +62,7 @@ class DbProcessor:
         }
         remove_id_and_line = {
             '$project': {
-                '_id': False, 
+                '_id': False,
                 'line': False,
                 'history._id': False,
                 'history.line': False

@@ -6,11 +6,12 @@ from whaaaaat import prompt
 from modules.purger.purger import Purger
 from modules.postprocessor.postprocessor import Postprocessor
 
+
 def select_languages(available_langs: list[str], current_langs: list[str]) -> list[str]:
     current_langs = [l.upper() for l in current_langs]
     include_all = 'all' in current_langs
     options = [
-        { 'name': option, 'value': option, 'checked': include_all or option in current_langs }
+        {'name': option, 'value': option, 'checked': include_all or option in current_langs}
         for option in available_langs
     ]
     answer = prompt({
@@ -21,9 +22,11 @@ def select_languages(available_langs: list[str], current_langs: list[str]) -> li
     })
     return answer['langs']
 
+
 @click.group(help="Tool to purge your raw fbl datasets and to postprocess them")
 def cli():
     pass
+
 
 @cli.command(help='Purges raw fbl datasets uploading them on MongoDB')
 @click.option('-s', '--src', type=click.STRING, default='datasets', show_default=True, help='Folder containing the raw datasets')
@@ -45,6 +48,7 @@ def purge(*, src: str, langs: list[str], dbname: str, threshold: int, bias: int,
         available_langs = purger.available_langs
         langs = select_languages(available_langs, langs)
     purger.purge(langs, dbname, threshold, bias, parallel, processes, force, skip, octopus, nazi, skip_first_line)
+
 
 @cli.command(help='Postprocesses a raw collection into a parsed collection')
 @click.option('-l', '--langs', type=click.STRING, multiple=True, default=[], show_default=True, help='Languages to process. If "all" is passed, all the languages are selected')
@@ -68,6 +72,7 @@ def process(*, langs: list[str], dbname: str, threshold: int, parallel: bool, pr
 def langs():
     pass
 
+
 @langs.command(help='Shows the languages available in the raw datasets')
 @click.option('-s', '--src', type=click.STRING, default='datasets', show_default=True, help='Folder containing the raw datasets')
 def raw(*, src: str):
@@ -77,6 +82,7 @@ def raw(*, src: str):
     click.echo(click.style('Available langs are:', fg='yellow', bold=True))
     click.echo(click.style(f'{langs_list}', fg='blue', bold=True))
 
+
 @langs.command(help='Shows the languages available in MongoDB')
 @click.option('-d', '--dbname', type=click.STRING, default='fbl', show_default=True, help='Name of the MongoDB database')
 def purged(*, dbname: str):
@@ -85,6 +91,7 @@ def purged(*, dbname: str):
     langs_list = "\n".join(langs)
     click.echo(click.style('Available langs are:', fg='yellow', bold=True))
     click.echo(click.style(f'{langs_list}', fg='blue', bold=True))
+
 
 if __name__ == '__main__':
     cli()

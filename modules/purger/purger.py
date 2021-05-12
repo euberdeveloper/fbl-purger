@@ -69,7 +69,7 @@ class Purger:
 
         lang_full_name = self.filedir.retrieve_lang_fullname(lang)
         uploader = Uploader(lang_full_name, asset.name,
-                                self.threshold, self.dbname, self.force and index == 0)
+                            self.threshold, self.dbname, self.force and index == 0)
 
         try:
             uploader.check_and_add_index()

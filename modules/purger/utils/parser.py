@@ -76,7 +76,7 @@ class Parser:
         matched = re.match(self.regex, line)
         return None if matched is None else matched.groupdict()
 
-    def __init__(self,  lang: str, asset: str, nazi: bool):
+    def __init__(self, lang: str, asset: str, nazi: bool):
         self.lang = lang
         self.asset = asset
         self.nazi = nazi

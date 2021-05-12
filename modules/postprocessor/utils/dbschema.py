@@ -1,8 +1,8 @@
 import re
-from pathlib import Path
 from pymongo import MongoClient
 from pymongo.collection import Collection
 from typing import Optional
+
 
 class DbSchema:
 
@@ -11,7 +11,7 @@ class DbSchema:
         coll_name_regex = r'^[A-Z]{3}(?:_[A-Za-z]+)+$'
         coll_name_parsed_regex = r'_parsed$'
         return [
-            { 
+            {
                 'lang': coll_name.split('_')[0],
                 'fullname': coll_name,
                 'collection': self.database.get_collection(coll_name),
@@ -24,13 +24,13 @@ class DbSchema:
     def __get_coll_from_lang(self, lang: str, parsed: bool) -> Optional[dict]:
         try:
             return next(filter(lambda el: el['is_parsed'] == parsed and el['lang'].lower() == lang.lower(), self.collections))
-        except Exception as err:
+        except Exception:
             return None
-   
+
     def __init__(self, dbname: str):
-       self.client = MongoClient()
-       self.database = self.client.get_database(dbname)
-       self.collections = self.__retrieve_collections()
+        self.client = MongoClient()
+        self.database = self.client.get_database(dbname)
+        self.collections = self.__retrieve_collections()
 
     def retrieve_langs(self) -> list[str]:
         return [
@@ -59,4 +59,3 @@ class DbSchema:
 
     def destroy(self) -> None:
         self.client.close()
-        
