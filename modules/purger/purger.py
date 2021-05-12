@@ -84,7 +84,7 @@ class Purger:
                             lang=lang, asset=asset.name)
                     raise err
 
-        with bz2.open(asset, 'rt') as input_file:
+        with bz2.open(asset, 'rt', encoding='ISO-8859-1') as input_file:
             # in some langs such as BRA two files split a line
             if index > 0 and self.skip_first_line:
                 next(input_file)
