@@ -28,7 +28,7 @@ class Parser:
             schemas = loads(text)
             return schemas[lang] if lang in schemas else schemas['default']
 
-    def __regex_from_details(self, prop: str, details: dict) -> str:
+    def __regex_from_details(self, details: dict) -> str:
         body = REGEXPS[details['regex']]
         multiplier = '*' if details['optional'] else '+'
         return rf'{body}{multiplier}'
@@ -37,7 +37,7 @@ class Parser:
         props = schema['props']
         separator = schema['separator']
         return '^' + separator.join([
-            rf'(?P<{prop}>{self.__regex_from_details(prop, details)})'
+            rf'(?P<{prop}>{self.__regex_from_details(details)})'
             for prop, details in props.items()
         ]) + '$'
 
