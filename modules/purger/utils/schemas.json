@@ -634,5 +634,82 @@
                 "keep": true
             }
         }
+    },
+    "DEU": {
+        "separator": ",",
+        "props": {
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false,
+                "keep": true
+            },
+            "fid": {
+                "regex": "numeric",
+                "type": "number",
+                "optional": false,
+                "keep": true
+            },
+            "name": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "surname": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "sex": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthPlace": {
+                "regex": "place_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "residence": {
+                "regex": "place_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "maritalStatus": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "profession": {
+                "regex": "total_whole",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "unusefulDate": {
+                "regex": "datetime_de",
+                "type": "datetime",
+                "optional": true,
+                "keep": false
+            },
+            "x": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "y": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Optional
 
 from ...utils import logger as log
+from ...utils.timeout import timeout
 
 # regexps to parse the lines
 REGEXPS = {
@@ -14,7 +15,10 @@ REGEXPS = {
     'uchar': r'(?:[\p{L}\p{M}*])',
     'whole': r'(?:[^:])',
     'whole_comma': r'(?:[^,])',
+    'total_whole': r'(?:.?)',
+    'place_comma': r'(?:[^,]+(?:, [^,]+)?(?:, [^,]+)?)',
     'datetime': r'(?:\d{1,2}\/\d{1,2}\/\d{1,4} \d{1,2}:\d{1,2}:\d{1,2} (?:AM|PM))',
+    'datetime_de': r'(?:\d{1,2}\/\d{1,2}\/\d{1,4} \d{1,2},\d{1,2},\d{1,2} (?:AM|PM))',
     'date': r'(?:(?:\d{1,2})(?:\/\d{1,2})?(?:\/\d{1,4})?)'
 }
 # if more than n subsequent lines fail, something is not working
@@ -72,9 +76,16 @@ class Parser:
         result['line'] = index
         return result
 
+    @timeout(2)
+    def __check_line_mach(self, line: str):
+        return re.match(self.regex, line)
+
     def __parse_line(self, line: str) -> Optional[dict]:
-        matched = re.match(self.regex, line)
-        return None if matched is None else matched.groupdict()
+        try:
+            matched = self.__check_line_mach(line)
+            return None if matched is None else matched.groupdict()
+        except Exception:
+            return None
 
     def __init__(self, lang: str, asset: str, nazi: bool):
         self.lang = lang
@@ -111,9 +122,10 @@ class Parser:
         elif self.failed_line:
             txt = f'Failed parsing line at (biased) index {index - 1}'
             if self.nazi:
+                log.err(txt, lang=self.lang, asset=self.asset)
                 raise Exception(txt)
             else:
-                log.warn(txt)
+                log.warn(txt, lang=self.lang, asset=self.asset)
             self.failed_line = None
 
         return None if extracted is None else self.__parse_matched(extracted, index)
