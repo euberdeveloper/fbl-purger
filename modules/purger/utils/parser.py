@@ -40,8 +40,9 @@ class Parser:
     def __compute_regex(self, schema: dict) -> str:
         props = schema['props']
         separator = schema['separator']
+        attornator = schema['attornator']
         return '^' + separator.join([
-            rf'(?P<{prop}>{self.__regex_from_details(details)})'
+            rf'{attornator}(?P<{prop}>{self.__regex_from_details(details)}){attornator}'
             for prop, details in props.items()
         ]) + '$'
 
@@ -97,6 +98,8 @@ class Parser:
 
         self.failed_line = None
         self.subseq_failures = 0
+
+        log.debug(self.regex, lang=self.lang, asset=self.asset)
 
     def parse_line(self, index: int, line: str) -> Optional[dict]:
         extracted = self.__parse_line(line)
