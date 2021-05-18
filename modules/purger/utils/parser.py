@@ -99,7 +99,7 @@ class Parser:
         self.failed_line = None
         self.subseq_failures = 0
 
-        log.debug(self.regex, lang=self.lang, asset=self.asset)
+        log.debug(self.regex, lang=self.lang, asset=self.asset, scope='Parser')
 
     def parse_line(self, index: int, line: str) -> Optional[dict]:
         extracted = self.__parse_line(line)
@@ -115,7 +115,7 @@ class Parser:
                 self.subseq_failures += 1
             if self.subseq_failures > MAX_FAILURES:
                 if self.nazi:
-                    txt = f'Too many lines failed ({self.subseq_failures})'
+                    txt = f'Too many lines failed ({self.subseq_failures}), index was {index}'
                     log.err(txt, lang=self.lang, asset=self.asset)
                     raise Exception(txt)
                 else:

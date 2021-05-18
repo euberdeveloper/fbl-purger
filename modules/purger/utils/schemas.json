@@ -743,7 +743,7 @@
             },
             "telephone": {
                 "regex": "phone",
-                "type": "number",
+                "type": "string",
                 "optional": false,
                 "keep": true
             },

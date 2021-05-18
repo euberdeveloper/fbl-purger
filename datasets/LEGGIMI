@@ -1,0 +1,5 @@
+Brasile: l'ultima riga di 0.txt continuava su 1.txt, sistemato spostandola tutta su 0.txt
+Bahrain: eliminata prima riga inutile e tolto byte strano iniziale che rompeva tutto
+Algeria: eliminata prima riga inutile
+Germania: eliminato primo carattere strano, sistema virgola fid:100016764546978 fid:100000407105148, remove second file
+Egitto: mantenute solo le prime 5 milioni di righe per 0.txt e le prime 3 milioni per gli altri due file
