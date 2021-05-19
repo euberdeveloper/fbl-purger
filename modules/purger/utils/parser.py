@@ -15,6 +15,7 @@ REGEXPS = {
     'uchar': r'(?:[\p{L}\p{M}*])',
     'whole': r'(?:[^:])',
     'whole_comma': r'(?:[^,])',
+    'whole_dbquotes': r'(?:[^"])',
     'total_whole': r'(?:.?)',
     'place_comma': r'(?:[^,]+(?:, [^,]+)?(?:, [^,]+)?)',
     'datetime': r'(?:\d{1,2}\/\d{1,2}\/\d{1,4} \d{1,2}:\d{1,2}:\d{1,2} (?:AM|PM))',
