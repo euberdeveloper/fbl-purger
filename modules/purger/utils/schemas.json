@@ -1077,15 +1077,15 @@
                 "optional": true,
                 "keep": false
             },
-            "x": {
+            "email": {
                 "regex": "whole_comma",
                 "type": "string",
                 "optional": true,
                 "keep": true
             },
-            "y": {
-                "regex": "whole_comma",
-                "type": "string",
+            "birthDate": {
+                "regex": "date",
+                "type": "date",
                 "optional": true,
                 "keep": true
             }
