@@ -8,7 +8,7 @@ from modules.postprocessor.postprocessor import Postprocessor
 
 
 def select_languages(available_langs: list[str], current_langs: list[str]) -> list[str]:
-    current_langs = [l.upper() for l in current_langs]
+    current_langs = [language.upper() for language in current_langs]
     include_all = 'all' in current_langs
     options = [
         {'name': option, 'value': option, 'checked': include_all or option in current_langs}
