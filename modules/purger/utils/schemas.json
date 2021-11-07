@@ -1090,5 +1090,83 @@
                 "keep": true
             }
         }
+    },
+    "ISR": {
+        "separator": ":",
+        "attornator": "",
+        "props": {
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false,
+                "keep": true
+            },
+            "fid": {
+                "regex": "phone",
+                "type": "number",
+                "optional": false,
+                "keep": true
+            },
+            "name": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "surname": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "sex": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthPlace": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "residence": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "maritalStatus": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "profession": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "unusefulDate": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "email": {
+                "regex": "whole",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthDate": {
+                "regex": "date",
+                "type": "date",
+                "optional": true,
+                "keep": true
+            }
+        }
     }
 }
