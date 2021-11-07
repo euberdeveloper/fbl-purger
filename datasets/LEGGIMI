@@ -5,3 +5,5 @@ Germania: eliminato primo carattere strano, sistema virgola fid:100016764546978 
 Egitto: mantenute solo le prime 5 milioni di righe per 0.txt e le prime 3 milioni per gli altri due file
 Francia: mantenuti solo dataset 3 e 5. rimossi caratteri strani all'inizio di ogni file. Rimosso carattere strano che rompeva virgola nelle righe fid:100009310251232, fid:100014601819854, fid:100010264872516, fid:l100009152720845
 Regno Unito: solo primo file (0.txt) non corrotto
+India: moved last line of first file to second file because it was splitted
+Iraq: posticipato
