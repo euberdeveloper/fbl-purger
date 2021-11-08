@@ -86,12 +86,13 @@ class Purger:
                             lang=lang, asset=asset.name)
                     raise err
 
-        with (bz2.open if asset.suffix == 'bz2' else open)(asset, 'rt', encoding='ISO-8859-1') as input_file:
+        with (bz2.open if asset.suffix == '.bz2' else open)(asset, 'rt', encoding='ISO-8859-1') as input_file:
             # in some langs such as BRA two files split a line
             if index > 0 and self.skip_first_line:
                 next(input_file)
             for index, line in enumerate(input_file):
                 line = line.rstrip('\n')
+                print(line)
                 profile = parser.parse_line(bias + index, line)
                 if profile:
                     uploader.append(profile)
