@@ -126,6 +126,7 @@ class Parser:
                              lang=self.lang, asset=self.asset)
                     self.failed_line = None
         elif self.failed_line:
+            print(line)
             txt = f'Failed parsing line at (biased) index {index - 1}'
             if self.nazi:
                 log.err(txt, lang=self.lang, asset=self.asset)
