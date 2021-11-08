@@ -92,7 +92,6 @@ class Purger:
                 next(input_file)
             for index, line in enumerate(input_file):
                 line = line.rstrip('\n')
-                print(line)
                 profile = parser.parse_line(bias + index, line)
                 if profile:
                     uploader.append(profile)
