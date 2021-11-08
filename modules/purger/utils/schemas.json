@@ -1216,5 +1216,222 @@
                 "keep": true
             }
         }
+    },
+    "JOR": {
+        "separator": ",",
+        "attornator": "",
+        "props": {
+            "fid": {
+                "regex": "numeric",
+                "type": "number",
+                "optional": false,
+                "keep": true
+            },
+            "x0": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x1": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false,
+                "keep": true
+            },
+            "x2": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthDate": {
+                "regex": "date",
+                "type": "date",
+                "optional": true,
+                "keep": true
+            },
+            "surname": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "name": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "sex": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "facebookLink": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "language": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "facebookUsername": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fullName": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+
+            "status": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "profession": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "professionDetails": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "residence": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthPlace": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "school": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "facebookEmail": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x3": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x4": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x5": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "strangeDate1": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "strangeDate2": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "maritalStatus": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x6": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x7": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x8": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x9": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x10": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x11": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x12": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x13": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x14": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            }
+        }
     }
 }
