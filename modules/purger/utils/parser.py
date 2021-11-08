@@ -20,7 +20,9 @@ REGEXPS = {
     'place_comma': r'(?:[^,]+(?:, [^,]+)?(?:, [^,]+)?)',
     'datetime': r'(?:\d{1,2}\/\d{1,2}\/\d{1,4} \d{1,2}:\d{1,2}:\d{1,2} (?:AM|PM))',
     'datetime_de': r'(?:\d{1,2}\/\d{1,2}\/\d{1,4} \d{1,2},\d{1,2},\d{1,2} (?:AM|PM))',
-    'date': r'(?:(?:\d{1,2})(?:\/\d{1,2})?(?:\/\d{1,4})?)'
+    'date': r'(?:(?:\d{1,2})(?:\/\d{1,2})?(?:\/\d{1,4})?)',
+    'location_divider': r'(?:Location\*)',
+    'link_divider': r'(?:link\*)'
 }
 # if more than n subsequent lines fail, something is not working
 MAX_FAILURES = 10

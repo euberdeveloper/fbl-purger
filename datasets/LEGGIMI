@@ -8,3 +8,5 @@ Regno Unito: solo primo file (0.txt) non corrotto
 India: moved last line of first file to second file because it was splitted
 Iraq: posticipato
 Giordania: eliminato primo carattere strano
+Kuwait: totalmente corrotto
+Libano: rimosso utilissimo header, aggiunte virgole casuali alla fine del primo utente, fid:100017256399286 rimossa virgola dopo nome, fid:100017613492687 rimossa virgola in mezzo a nome
