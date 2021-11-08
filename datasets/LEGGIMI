@@ -16,4 +16,4 @@ Marocco: saltato perchè in formato mac/dos e non unix
 Olanda: spostata prima riga di 1.txt su 0.txt perchè riga spezzata su due file
 Oman: totally corrupted
 Peru: only second file not corrupted, first file corrupted after line 2022112, remove first line of second file because splitted between two files
-Palestine: removed first strange char, removed user fid:100022903072104;fid:100008149171689
+Palestine: removed first strange char, fix corrupted end of line after fid:100006675588577
