@@ -3,7 +3,7 @@ from pathlib import Path
 from joblib import Parallel, delayed
 
 from ..utils import logger as log
-from .utils.defaults import DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_BIAS, DEFAULT_PARALLEL, DEFAULT_PROCESSES, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI, DEFAULT_SKIP_FIRST_LINE
+from .utils.defaults import DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_BIAS, DEFAULT_PARALLEL, DEFAULT_PROCESSES, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI, DEFAULT_SKIP_FIRST_LINE, DEFAULT_WIDE
 from .utils.filedir import FileDir
 from .utils.uploader import Uploader
 from .utils.parser import Parser
@@ -11,7 +11,7 @@ from .utils.parser import Parser
 
 class Purger:
 
-    def __set_fields(self, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, force: bool, skip: bool, octopus: bool, nazi: bool, skip_first_line: bool):
+    def __set_fields(self, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, force: bool, skip: bool, octopus: bool, nazi: bool, skip_first_line: bool, wide: bool):
         self.langs = self.available_langs if 'all' in langs else langs
         self.dbname = dbname
         self.threshold = threshold
@@ -23,6 +23,7 @@ class Purger:
         self.octopus = octopus
         self.nazi = nazi
         self.skip_first_line = skip_first_line
+        self.wide = wide
 
     def __print_settings(self) -> None:
         print('---------------')
@@ -42,6 +43,7 @@ class Purger:
         print(f'If a collection already exists, will I skip it? {self.skip}')
         print(f'If a line fails, will I terminate the program? {self.nazi}')
         print(f'Skip first line: {self.skip_first_line}')
+        print(f'Will consider also txt files: {self.wide}')
         print('---------------')
 
     def __purge(self) -> None:
@@ -50,7 +52,7 @@ class Purger:
                 Parallel(n_jobs=self.processes)(
                     delayed(self._purge_asset)(lang, asset, index)
                     for lang in self.langs
-                    for index, asset in enumerate(self.filedir.retrieve_lang_assets(lang))
+                    for index, asset in enumerate(self.filedir.retrieve_lang_assets(lang, self.wide))
                 )
             else:
                 Parallel(n_jobs=self.processes)(
@@ -84,7 +86,7 @@ class Purger:
                             lang=lang, asset=asset.name)
                     raise err
 
-        with bz2.open(asset, 'rt', encoding='ISO-8859-1') as input_file:
+        with (bz2.open if asset.suffix == 'bz2' else open)(asset, 'rt', encoding='ISO-8859-1') as input_file:
             # in some langs such as BRA two files split a line
             if index > 0 and self.skip_first_line:
                 next(input_file)
@@ -101,7 +103,7 @@ class Purger:
 
     def _purge_lang(self, lang: str) -> None:
         log.info('Start purging lang', lang=lang)
-        assets_paths = self.filedir.retrieve_lang_assets(lang)
+        assets_paths = self.filedir.retrieve_lang_assets(lang, self.wide)
         for index, asset_path in enumerate(assets_paths):
             self._purge_asset(lang, asset_path, index)
         log.succ('Finish purging lang', lang=lang)
@@ -112,8 +114,8 @@ class Purger:
         self.filedir = FileDir(src_path)
         self.available_langs = self.filedir.retrieve_langs()
 
-    def purge(self, langs: list[str] = DEFAULT_LANGS, dbname=DEFAULT_DBNAME, threshold=DEFAULT_THRESHOLD, bias=DEFAULT_BIAS, parallel=DEFAULT_PARALLEL, processes=DEFAULT_PROCESSES, force=DEFAULT_FORCE, skip=DEFAULT_SKIP, octopus=DEFAULT_OCTOPUS, nazi=DEFAULT_NAZI, skip_first_line=DEFAULT_SKIP_FIRST_LINE) -> None:
+    def purge(self, langs: list[str] = DEFAULT_LANGS, dbname=DEFAULT_DBNAME, threshold=DEFAULT_THRESHOLD, bias=DEFAULT_BIAS, parallel=DEFAULT_PARALLEL, processes=DEFAULT_PROCESSES, force=DEFAULT_FORCE, skip=DEFAULT_SKIP, octopus=DEFAULT_OCTOPUS, nazi=DEFAULT_NAZI, skip_first_line=DEFAULT_SKIP_FIRST_LINE, wide=DEFAULT_WIDE) -> None:
         self.__set_fields(langs, dbname, threshold, bias, parallel,
-                          processes, force, skip, octopus, nazi, skip_first_line)
+                          processes, force, skip, octopus, nazi, skip_first_line, wide)
         self.__print_settings()
         self.__purge()

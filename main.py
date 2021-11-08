@@ -42,12 +42,13 @@ def cli():
 @click.option('-o', '--octopus/--no-octopus', is_flag=True, show_default=True, help='If parallel is set, purge even the assets of a same language in parallel')
 @click.option('-n', '--nazi/--no-nazi', is_flag=True, show_default=True, help='If it will fail as soon as an invalid line or error is encountered')
 @click.option('--skip-first-line/--no-skip-first-line', is_flag=True, show_default=True, help='If a language has more han an asset, it could happen that a line is split between two assets. If this flag is enabled, the first line of all but the first assets is skipped.')
-def purge(*, src: str, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, choose_langs: bool, force: bool, skip: bool, octopus: bool, nazi: bool, skip_first_line: bool):
+@click.option('-w', '--wide/--no-wide', is_flag=True, show_default=True, help='If also txt files and not only bz2 files will be considered')
+def purge(*, src: str, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, choose_langs: bool, force: bool, skip: bool, octopus: bool, nazi: bool, skip_first_line: bool, wide: bool):
     purger = Purger(src)
     if choose_langs:
         available_langs = purger.available_langs
         langs = select_languages(available_langs, langs)
-    purger.purge(langs, dbname, threshold, bias, parallel, processes, force, skip, octopus, nazi, skip_first_line)
+    purger.purge(langs, dbname, threshold, bias, parallel, processes, force, skip, octopus, nazi, skip_first_line, wide)
 
 
 @cli.command(help='Postprocesses a raw collection into a parsed collection')

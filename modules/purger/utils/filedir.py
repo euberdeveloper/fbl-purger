@@ -44,10 +44,10 @@ class FileDir:
     def retrieve_langs(self) -> list[Path]:
         return [lang_path['lang'] for lang_path in self.langs]
 
-    def retrieve_lang_assets(self, lang: str) -> list[Path]:
+    def retrieve_lang_assets(self, lang: str, wide: bool) -> list[Path]:
         lang_obj = self.__get_lang_obj_from_lang(lang)
         lang_path = lang_obj['path']
-        return sorted([file for file in lang_path.iterdir() if file.is_file() and file.suffix == '.bz2'], key=lambda f: f.name)
+        return sorted([file for file in lang_path.iterdir() if file.is_file() and file.suffix in (['.bz2', '.txt'] if wide else ['.bz2'])], key=lambda f: f.name)
 
     def retrieve_lang_fullname(self, lang: str) -> list[Path]:
         lang_obj = self.__get_lang_obj_from_lang(lang)
