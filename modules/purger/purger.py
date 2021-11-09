@@ -3,7 +3,7 @@ from pathlib import Path
 from joblib import Parallel, delayed
 
 from ..utils import logger as log
-from .utils.defaults import DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_BIAS, DEFAULT_PARALLEL, DEFAULT_PROCESSES, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI, DEFAULT_SKIP_FIRST_LINE, DEFAULT_WIDE
+from .utils.defaults import DEFAULT_JUMP_LINES, DEFAULT_SRC, DEFAULT_LANGS, DEFAULT_DBNAME, DEFAULT_THRESHOLD, DEFAULT_BIAS, DEFAULT_PARALLEL, DEFAULT_PROCESSES, DEFAULT_FORCE, DEFAULT_SKIP, DEFAULT_OCTOPUS, DEFAULT_NAZI, DEFAULT_SKIP_FIRST_LINE, DEFAULT_WIDE
 from .utils.filedir import FileDir
 from .utils.uploader import Uploader
 from .utils.parser import Parser
@@ -11,7 +11,7 @@ from .utils.parser import Parser
 
 class Purger:
 
-    def __set_fields(self, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, force: bool, skip: bool, octopus: bool, nazi: bool, skip_first_line: bool, wide: bool):
+    def __set_fields(self, langs: list[str], dbname: str, threshold: int, bias: int, parallel: bool, processes: int, force: bool, skip: bool, octopus: bool, nazi: bool, skip_first_line: bool, wide: bool, jump_lines: int):
         self.langs = self.available_langs if 'all' in langs else langs
         self.dbname = dbname
         self.threshold = threshold
@@ -24,6 +24,7 @@ class Purger:
         self.nazi = nazi
         self.skip_first_line = skip_first_line
         self.wide = wide
+        self.jump_lines = jump_lines
 
     def __print_settings(self) -> None:
         print('---------------')
@@ -87,9 +88,23 @@ class Purger:
                     raise err
 
         with (bz2.open if asset.suffix == '.bz2' else open)(asset, 'rt', encoding='ISO-8859-1') as input_file:
+            lines_to_skip = self.jump_lines
+
+            def skip_line():
+                nonlocal lines_to_skip
+                try:
+                    next(input_file)
+                except StopIteration:
+                    pass
+                lines_to_skip -= 1
+
             # in some langs such as BRA two files split a line
             if index > 0 and self.skip_first_line:
-                next(input_file)
+                skip_line()
+            # skip lines if needed
+            while lines_to_skip > 0:
+                skip_line()
+            # do the real job
             for index, line in enumerate(input_file):
                 line = line.rstrip('\n')
                 profile = parser.parse_line(bias + index, line)
@@ -114,8 +129,8 @@ class Purger:
         self.filedir = FileDir(src_path)
         self.available_langs = self.filedir.retrieve_langs()
 
-    def purge(self, langs: list[str] = DEFAULT_LANGS, dbname=DEFAULT_DBNAME, threshold=DEFAULT_THRESHOLD, bias=DEFAULT_BIAS, parallel=DEFAULT_PARALLEL, processes=DEFAULT_PROCESSES, force=DEFAULT_FORCE, skip=DEFAULT_SKIP, octopus=DEFAULT_OCTOPUS, nazi=DEFAULT_NAZI, skip_first_line=DEFAULT_SKIP_FIRST_LINE, wide=DEFAULT_WIDE) -> None:
+    def purge(self, langs: list[str] = DEFAULT_LANGS, dbname=DEFAULT_DBNAME, threshold=DEFAULT_THRESHOLD, bias=DEFAULT_BIAS, parallel=DEFAULT_PARALLEL, processes=DEFAULT_PROCESSES, force=DEFAULT_FORCE, skip=DEFAULT_SKIP, octopus=DEFAULT_OCTOPUS, nazi=DEFAULT_NAZI, skip_first_line=DEFAULT_SKIP_FIRST_LINE, wide=DEFAULT_WIDE, jump_lines=DEFAULT_JUMP_LINES) -> None:
         self.__set_fields(langs, dbname, threshold, bias, parallel,
-                          processes, force, skip, octopus, nazi, skip_first_line, wide)
+                          processes, force, skip, octopus, nazi, skip_first_line, wide, jump_lines)
         self.__print_settings()
         self.__purge()

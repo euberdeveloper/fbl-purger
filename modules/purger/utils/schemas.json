@@ -2353,7 +2353,7 @@
             "telephone": {
                 "regex": "phone",
                 "type": "string",
-                "optional": false,
+                "optional": true,
                 "keep": true
             },
             "x3": {
