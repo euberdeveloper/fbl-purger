@@ -67,7 +67,12 @@ class Parser:
             except Exception:
                 # It has to be bisestile or it raises an error for 29/02 :)
                 year = 12
-            return datetime(year, month, day)
+            try:
+                result = datetime(year, month, day)
+            except ValueError as error:
+                log.err(f'Invalid date: {value}', scope='Parser')
+                raise error
+            return result
         log.warn(f'Unrecognized type {vtype}',
                  lang=self.lang, asset=self.asset)
 
@@ -119,11 +124,13 @@ class Parser:
             if self.subseq_failures > MAX_FAILURES:
                 if self.nazi:
                     txt = f'Too many lines failed ({self.subseq_failures}), index was {index}'
+                    log.warn(self.failed_line + line, lang=self.lang, asset=self.asset)
                     log.err(txt, lang=self.lang, asset=self.asset)
                     raise Exception(txt)
                 else:
-                    log.warn(f'{self.subseq_failures} subsequent failures, file is probably nonsense',
+                    log.warn(f'{self.subseq_failures} subsequent failures, file is probably nonsense, index is {index}',
                              lang=self.lang, asset=self.asset)
+                    self.subseq_failures = 0
                     self.failed_line = None
         elif self.failed_line:
             txt = f'Failed parsing line at (biased) index {index - 1}'

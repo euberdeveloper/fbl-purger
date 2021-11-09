@@ -18,3 +18,4 @@ Oman: totally corrupted
 Peru: only second file not corrupted, first file corrupted after line 2022112, remove first line of second file because splitted between two files
 Palestina: removed first strange char, fix corrupted end of line after fid:100006675588577
 Quatar: totally corrupted
+Arabia Saudita: fix telephone number of fid:100022326137398;fid:100016490044516, fix that bastard of fid:100000465700153 that put 29/02 on bisestile year, removed empty line after fid:100010448895266;fid:100025836124179

@@ -58,8 +58,8 @@
                 "keep": true
             },
             "unusefulDate": {
-                "regex": "datetime",
-                "type": "datetime",
+                "regex": "whole",
+                "type": "string",
                 "optional": true,
                 "keep": false
             },
@@ -2325,6 +2325,222 @@
                 "type": "string",
                 "optional": true,
                 "keep": true
+            }
+        }
+    },
+    "SAU": {
+        "separator": ",",
+        "attornator": "\"",
+        "props": {
+            "fid": {
+                "regex": "numeric",
+                "type": "number",
+                "optional": false,
+                "keep": true
+            },
+            "x1": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "email": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false,
+                "keep": true
+            },
+            "x3": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "birthDate": {
+                "regex": "date",
+                "type": "date",
+                "optional": true,
+                "keep": true
+            },
+            "name": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "surname": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "sex": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "fbLink": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x9": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x10": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "fullname": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x12": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "profession": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x14": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "birthPlace": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "residence": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x17": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "fbEmail": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x19": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x20": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x21": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "unknownDate1": {
+                "regex": "datetime",
+                "type": "datetime",
+                "optional": true,
+                "keep": false
+            },
+            "unknownDate2": {
+                "regex": "whole_dbquotes",
+                "type": "datetime",
+                "optional": true,
+                "keep": false
+            },
+            "x24": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x25": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x26": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x27": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x28": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x29": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x30": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x31": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x32": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "x33": {
+                "regex": "whole_dbquotes",
+                "type": "string",
+                "optional": true,
+                "keep": false
             }
         }
     }
