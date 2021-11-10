@@ -18,7 +18,7 @@ Oman: totally corrupted
 Peru: only second file not corrupted, first file corrupted after line 2022112, remove first line of second file because splitted between two files
 Palestina: removed first strange char, fix corrupted end of line after fid:100006675588577
 Quatar: totally corrupted
-Arabia Saudita: (0.txt) fix telephone number of fid:100016832790132;fid:100022326137398;fid:100016490044516;fid:100024535130084, fix that bastard of fid:100000465700153 that put 29/02 on bisestile year, removed empty line after fid:100011339788789;fid:100010448895266;fid:100025836124179;fid:100000022365180;fid:100013525721670;fid:100004294087847 (1.txt) fix telephone on fid:100015604653032;fid:716516132;fid:100015758250653;fid:100025299000965;fid:100027820103576, fix blank line near fid:100024211128988;fid:100018609977397;fid:100009943984461;fid:100014897897095;fid:100014744282882, dopo fid:100014744282882 non tutti hanno il numero di telefono (2.txt) fix blank line near fid:100022386817899;fid:100013288931517;fid:100016914153327;fid:100015356201946;fid:100003922581716, fix telephone of fid:100016386822137;fid:100015374347275;fid:100016900785468;fid:100016496916894;fid:100010538179202;fid:100017010677156;fid:100017989380411, fix birthday fid:100015374347275
+Arabia Saudita: con uno script rimossi tutte le linee bianche dei vari file (0.txt) fix telephone number of fid:100016832790132;fid:100022326137398;fid:100016490044516;fid:100024535130084, fix that bastard of fid:100000465700153 that put 29/02 on bisestile year (1.txt) fix telephone on fid:100015604653032;fid:716516132;fid:100015758250653;fid:100025299000965;fid:100027820103576, dopo fid:100014744282882 non tutti hanno il numero di telefono (2.txt)  fix birthday fid:100015374347275
 
 
 
