@@ -22,7 +22,7 @@ Arabia Saudita: con uno script rimossi tutte le linee bianche dei vari file (0.t
 Turchia: rimosso utilissimo header, aggiunte virgole mancanti alla prima riga, rimossa virgola in più su fid:100016892803362;fid:100017014388565;fid:100016407974442;fid:100017945259025;fid:100015444391274;fid:100015931212370;fid:100016578572068, parte corrotta vicino a fid:100024646760659 eliminate tutte le righe successive
 Tunisia: rimosso utilissimo header, dopo fid:100008109033339 file corrotto e parte rimossa, rimossa virgola in più su fid:100016063843404
 Stati uniti: spostata la prima riga di USA 3.txt alla fine di USA 1.txt perchè spezzata su due file (I file non erano in ordine giusto). Spostata prima riga di USA 4 alla fine di USA 2. Spostata la prima riga di USA 6 su Usa 7. Sopstata la prima riga di USA 6 su USA 5.
-
+Yemen: rimosso utilissimo header, rimossa virgola in più su fid:100015823896759;fid:100015329230370;fid:100016229582205, file corrotto dopo fid:100022296421347 rimosse rigue successive
 
 
 
