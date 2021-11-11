@@ -21,7 +21,7 @@ Quatar: totally corrupted
 Arabia Saudita: con uno script rimossi tutte le linee bianche dei vari file (0.txt) fix telephone number of fid:100016832790132;fid:100022326137398;fid:100016490044516;fid:100024535130084, fix that bastard of fid:100000465700153 that put 29/02 on bisestile year (1.txt) fix telephone on fid:100015604653032;fid:716516132;fid:100015758250653;fid:100025299000965;fid:100027820103576, dopo fid:100014744282882 non tutti hanno il numero di telefono (2.txt)  fix birthday fid:100015374347275
 Turchia: rimosso utilissimo header, aggiunte virgole mancanti alla prima riga, rimossa virgola in più su fid:100016892803362;fid:100017014388565;fid:100016407974442;fid:100017945259025;fid:100015444391274;fid:100015931212370;fid:100016578572068, parte corrotta vicino a fid:100024646760659 eliminate tutte le righe successive
 Tunisia: rimosso utilissimo header, dopo fid:100008109033339 file corrotto e parte rimossa, rimossa virgola in più su fid:100016063843404
-
+Stati uniti: spostata la prima riga di USA 3.txt alla fine di USA 1.txt perchè spezzata su due file (I file non erano in ordine giusto). Spostata prima riga di USA 4 alla fine di USA 2. Spostata la prima riga di USA 6 su Usa 7. Sopstata la prima riga di USA 6 su USA 5.
 
 
 
