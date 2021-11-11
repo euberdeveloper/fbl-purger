@@ -2699,5 +2699,185 @@
                 "keep": false
             }
         }
+    },
+    "TUR": {
+        "separator": ",",
+        "attornator": "",
+        "props": {
+            "fid": {
+                "regex": "numeric",
+                "type": "number",
+                "optional": false,
+                "keep": true
+            },
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false,
+                "keep": true
+            },
+            "name": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "surname": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "email": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthDate": {
+                "regex": "place_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "sex": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "language": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthPlace": {
+                "regex": "place_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x0": {
+                "regex": "location_divider",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "residence": {
+                "regex": "place_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x1": {
+                "regex": "link_divider",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "facebookLink": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "comma_padding": {
+                "regex": "total_whole",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            }
+        }
+    },
+    "TUN": {
+        "separator": ",",
+        "attornator": "",
+        "props": {
+            "fid": {
+                "regex": "numeric",
+                "type": "number",
+                "optional": false,
+                "keep": true
+            },
+            "telephone": {
+                "regex": "phone",
+                "type": "string",
+                "optional": false,
+                "keep": true
+            },
+            "name": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "surname": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "email": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthDate": {
+                "regex": "place_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "sex": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "language": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "birthPlace": {
+                "regex": "place_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x0": {
+                "regex": "location_divider",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "residence": {
+                "regex": "place_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "x1": {
+                "regex": "link_divider",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            },
+            "facebookLink": {
+                "regex": "whole_comma",
+                "type": "string",
+                "optional": true,
+                "keep": true
+            },
+            "comma_padding": {
+                "regex": "total_whole",
+                "type": "string",
+                "optional": true,
+                "keep": false
+            }
+        }
     }
 }
